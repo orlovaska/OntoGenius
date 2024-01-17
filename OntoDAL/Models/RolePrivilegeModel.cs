@@ -10,7 +10,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет связь между ролью и привилегией.
     /// </summary>
-    internal class RolePrivilegeModel
+    public class RolePrivilegeModel
     {
         /// <summary>
         /// Идентификатор.

@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет свойство онтологии.
     /// </summary>
-    internal class OntologyPropertyModel
+    public class OntologyPropertyModel
     {
         /// <summary>
         /// Идентификатор.
@@ -39,12 +39,12 @@ namespace OntoDAL.Models
         /// <summary>
         /// Ссылка на объект класса-источника.
         /// </summary>
-        public OntologyClass DomainClass { get; set; }
+        public OntologyClassModel DomainClass { get; set; }
 
         /// <summary>
         /// Ссылка на объект класса-цели.
         /// </summary>
-        public OntologyClass RangeClass { get; set; }
+        public OntologyClassModel RangeClass { get; set; }
 
         /// <summary>
         /// Описание.

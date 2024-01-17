@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет экземпляр класса онтологии.
     /// </summary>
-    internal class OntologyClassInstance
+    public class OntologyClassInstanceModel
     {
         /// <summary>
         /// Идентификатор.
@@ -24,7 +24,7 @@ namespace OntoDAL.Models
         /// <summary>
         /// Ссылка на класс онтологии, к которому принадлежит экземпляр.
         /// </summary>
-        public OntologyClass Class { get; set; }
+        public OntologyClassModel Class { get; set; }
 
         /// <summary>
         /// Название.

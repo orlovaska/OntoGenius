@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OntoDAL.Models
 {
-     /// <summary>
+    /// <summary>
     /// Представляет связь между пользователем и ролью.
     /// </summary>
-    internal class UserRoleModel
+    public class UserRoleModel
     {
         /// <summary>
         /// Идентификатор.

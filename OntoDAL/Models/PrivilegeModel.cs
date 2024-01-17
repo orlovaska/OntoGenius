@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Модель привилегии.
     /// </summary>
-    internal class PrivilegeModel
+    public class PrivilegeModel
     {
         /// <summary>
         /// Уникальный идентификатор привилегии.

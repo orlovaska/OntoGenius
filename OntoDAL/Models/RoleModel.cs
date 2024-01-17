@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет роль пользователя.
     /// </summary>
-    internal class RoleModel
+    public class RoleModel
     {
         /// <summary>
         /// Идентификатор.

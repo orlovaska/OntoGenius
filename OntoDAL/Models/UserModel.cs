@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет пользователя системы.
     /// </summary>
-    internal class UserModel
+    public class UserModel
     {
         /// <summary>
         /// Идентификатор пользователя.

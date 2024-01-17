@@ -9,7 +9,7 @@ namespace OntoDAL.Models
     /// <summary>
     /// Представляет объект онтологии.
     /// </summary>
-    internal class OntologyModel
+    public class OntologyModel
     {
         /// <summary>
         /// Идентификатор.
@@ -44,7 +44,7 @@ namespace OntoDAL.Models
         /// <summary>
         /// Список классов.
         /// </summary>
-        public List<OntologyClass> OntologyClasses { get; set; }
+        public List<OntologyClassModel> OntologyClasses { get; set; }
     }
 
 }
