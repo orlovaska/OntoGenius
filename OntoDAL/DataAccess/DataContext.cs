@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OntoDAL.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace OntoDAL.DataAccess
 {
-    public class DataContext : DbContext
+    //TODO- исправить - взять роли из бд
+    public class DataContext : IdentityDbContext<UserModel, RoleModel, int>
     {
         public DbSet<OntologyClassInstanceModel> OntologyClassInstances { get; set; }
         public DbSet<OntologyClassModel> OntologyClasses { get; set; }
@@ -20,9 +23,12 @@ namespace OntoDAL.DataAccess
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserRoleModel> UserRoles { get; set; }
 
+        public DataContext()
+        {
+        }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
         }
 
         public async Task<int> SaveChangesAsync()
@@ -30,14 +36,14 @@ namespace OntoDAL.DataAccess
             return await base.SaveChangesAsync();
         }
 
-        public DbSet<T> DbSet<T>() where T : class
-        {
-            return Set<T>();
-        }
+        //public DbSet<T> DbSet<T>() where T : class
+        //{
+        //    return Set<T>();
+        //}
 
-        public new IQueryable<T> Query<T>() where T : class
-        {
-            return Set<T>();
-        }
+        //public new IQueryable<T> Query<T>() where T : class
+        //{
+        //    return Set<T>();
+        //}
     }
 }

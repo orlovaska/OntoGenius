@@ -39,7 +39,7 @@ namespace OntoDAL.Models
         /// <summary>
         /// Ссылка на родительский класс.
         /// </summary>
-        public OntologyClass? ParentClass { get; set; }
+        public OntologyClassModel? ParentClass { get; set; }
 
         /// <summary>
         /// Описание.

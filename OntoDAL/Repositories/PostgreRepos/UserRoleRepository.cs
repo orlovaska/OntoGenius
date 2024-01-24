@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OntoDAL.Repositories
+namespace OntoDAL.Repositories.PostgreRepos
 {
     public class UserRoleRepository : IDbRepository<UserRoleModel>
     {
