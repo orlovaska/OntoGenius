@@ -57,11 +57,6 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddIdentity<UserModel, RoleModel>(options =>
 {
-    // Ваши остальные настройки...
-
-    //// Очистите свойство ClaimsIdentity для отключения поддержки утверждений
-    //options.ClaimsIdentity.UserIdClaimType = null;
-    //options.ClaimsIdentity.UserNameClaimType = null;
 })
 .AddEntityFrameworkStores<DataContext>()
 .AddDefaultTokenProviders();
