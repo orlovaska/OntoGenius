@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import i18next from './i18n';
+
+console.log(i18next.t('common:title'))
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+        <>{i18next.t('common:description.part6')}</>
   </React.StrictMode>
 );
 

@@ -1,0 +1,12 @@
+{
+  "title": "Willkommen, um mit <1>react-i18next</1> völlig typsicher zu reagieren",
+  "description": {
+    "part1": "Dies ist ein einfaches Beispiel.",
+    "part2": "😉",
+    "part4": "Это 4 часть",
+    "part5": "Это 5 часть",
+    "part6": "Это 6 часть"
+
+
+  }
+}
