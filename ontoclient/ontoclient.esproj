@@ -11,4 +11,11 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\http\" />
+    <Folder Include="src\models\response\" />
+    <Folder Include="src\hooks\" />
+    <Folder Include="src\store\reducers\" />
+    <Folder Include="src\utils\" />
+  </ItemGroup>
 </Project>
