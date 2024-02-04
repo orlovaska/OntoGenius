@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace OntoApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -26,7 +27,7 @@ namespace OntoApi.Controllers
             _logger = logger;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -59,7 +60,7 @@ namespace OntoApi.Controllers
                        $"Failed to create user: {string.Join(" ", result.Errors.Select(e => e.Description))}");
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,7 +92,7 @@ namespace OntoApi.Controllers
             });
         }
 
-        [HttpPost("Refresh")]
+        [HttpPost("refresh")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -122,7 +123,7 @@ namespace OntoApi.Controllers
         }
 
         [Authorize]
-        [HttpDelete("Revoke")]
+        [HttpDelete("revoke")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
