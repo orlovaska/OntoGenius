@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { AuthResponse } from "../models/response/AuthResponse";
+import Cookies from 'js-cookie';
+import { LoginResponse } from "../models/response/LoginResponse";
 import { API_URL, AUTH_CONTROLLER_ROUTE } from '../utils/consts';
 
 const $api = axios.create({
@@ -19,11 +20,21 @@ $api.interceptors.response.use((config) => {
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
         originalRequest._isRetry = true;
         try {
-            const response = await axios.post<AuthResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { withCredentials: true })
-            localStorage.setItem('token', response.data.accessToken);
+            console.log("Был запрос на refresh");
+            // document.cookie = 
+            // const response = await axios.post<LoginResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { withCredentials: true })
+            const accessToken = localStorage.getItem('token');
+            const refreshToken = Cookies.get('refreshToken');
+            const response = await axios.post<LoginResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { accessToken: accessToken, refreshToken: refreshToken })
+            const newAccessTokenToken =response.data.accessToken;
+            localStorage.setItem('token', newAccessTokenToken);
+            // TODO убрать установку куки с фронта на бек
+            // Установка refreshToken в куку без указания срока истечения
+            const newRefreshToken =response.data.refreshToken;
+            Cookies.set('refreshToken', newRefreshToken);
             return $api.request(originalRequest);
         } catch (e) {
-            console.log('�� �����������')
+            console.log('Не авторизован')
         }
     }
     throw error;

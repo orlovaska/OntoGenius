@@ -1,3 +1,5 @@
 export interface IOntology {
-    //TODO - написать интерфейс для онтологии
+    id: number,
+    name: string
+    ownerUsername: string
 }

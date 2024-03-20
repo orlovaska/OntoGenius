@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using OntoApi.Authentication;
+using OntoApi.Models.Authentication;
+using OntoApi.Models.DTO;
 using OntoDAL.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -86,9 +87,10 @@ namespace OntoApi.Controllers
 
             return Ok(new LoginResponse
             {
-                JwtToken = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo,
-                RefreshToken = refreshToken
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                //Expiration = token.ValidTo,
+                RefreshToken = refreshToken,
+                User = (UserDto)user
             });
         }
 
@@ -116,9 +118,10 @@ namespace OntoApi.Controllers
 
             return Ok(new LoginResponse
             {
-                JwtToken = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo,
-                RefreshToken = model.RefreshToken
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                //Expiration = token.ValidTo,
+                RefreshToken = model.RefreshToken,
+                User = (UserDto)user
             });
         }
 

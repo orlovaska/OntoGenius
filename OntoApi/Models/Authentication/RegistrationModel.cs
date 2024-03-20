@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OntoApi.Authentication
+namespace OntoApi.Models.Authentication
 {
     public class RegistrationModel
     {

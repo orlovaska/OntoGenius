@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Route,
     Routes,
     Navigate,
     Router,
     BrowserRouter,
+    Link,
+    useNavigate,
 } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { privateRoutes, publicRoutes } from "../routes";
-import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/consts";
+import { HOME_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
 
 const AppRouter: React.FC = () => {
-    const user =null;
+    const { user } = useAppSelector((state) => state.userReducer);
+    console.log("user AppRouter: ", user);
 
-    // const user = useAppSelector((state) => state.userReducer.user);
-    console.log("user: ", user);
     return (
         <BrowserRouter>
             {user ? (
                 <Navigate to={HOME_ROUTE} />
             ) : (
-                <Navigate to={LOGIN_ROUTE} />
+                <Navigate to={REGISTRATION_ROUTE} />
             )}
             <Routes>
                 {user
                     ? privateRoutes.map(({ path, Component }) => (
-                          <Route
-                              key={path}
-                              path={path}
-                              element={<Component />}
-                          />
+                          <>
+                              <Route
+                                  key={path}
+                                  path={path}
+                                  element={<Component />}
+                              />
+                          </>
                       ))
                     : publicRoutes.map(({ path, Component }) => (
                           <Route
@@ -39,6 +42,7 @@ const AppRouter: React.FC = () => {
                           />
                       ))}
             </Routes>
+            {/* {user ? <Link to={HOME_ROUTE} /> : <Link to={REGISTRATION_ROUTE} />} */}
         </BrowserRouter>
     );
 };

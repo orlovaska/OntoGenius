@@ -4,12 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OntoApi", "OntoApi\OntoApi.csproj", "{62B2A4CE-6BA5-4C1A-AF39-95369CC40916}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F30C3AA-4B13-4F94-878A-187317AE9888} = {5F30C3AA-4B13-4F94-878A-187317AE9888}
+	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ontoclient", "ontoclient\ontoclient.esproj", "{3ED4F4FF-AB30-4C9C-8B17-4D7D2D12D3D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OntoDAL", "OntoDAL\OntoDAL.csproj", "{26E5902A-26D2-432C-81ED-3B0A5F79C213}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OntoDAL", "OntoDAL\OntoDAL.csproj", "{26E5902A-26D2-432C-81ED-3B0A5F79C213}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OntoDomain", "OntoDomain\OntoDomain.csproj", "{5F30C3AA-4B13-4F94-878A-187317AE9888}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OntoDomain", "OntoDomain\OntoDomain.csproj", "{5F30C3AA-4B13-4F94-878A-187317AE9888}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

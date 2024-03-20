@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\http\" />
-    <Folder Include="src\models\response\" />
+    <Folder Include="src\models\request\" />
     <Folder Include="src\hooks\" />
     <Folder Include="src\store\reducers\" />
     <Folder Include="src\utils\" />

@@ -13,12 +13,12 @@ namespace OntoDAL.Repositories
 
         Task Delete(int entityId);
 
-        //Task Remove(T entity);
-        //Task RemoveRange(IEnumerable<T> entities);
-
         Task Update(T entity);
         Task UpdateRange(IEnumerable<T> entities);
 
         Task<int> SaveChangesAsync();
     }
+
+        //Task Remove(T entity);
+        //Task RemoveRange(IEnumerable<T> entities);
 }

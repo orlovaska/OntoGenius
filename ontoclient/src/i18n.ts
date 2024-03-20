@@ -5,7 +5,7 @@ import enWorkSpace from './locales/en/workspace.json';
 import ruCommon from './locales/ru/common.json';
 import ruWorkSpace from './locales/ru/workspace.json';
 
-export const defaultNS = 'common';
+export const defaultNS = "common";
 
 i18next.use(initReactI18next).init({
   debug: true,

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace OntoDAL.DataAccess
 {
-    //TODO- исправить - взять роли из бд
     public class DataContext : IdentityDbContext<UserModel, RoleModel, int>
     {
         public DbSet<OntologyClassInstanceModel> OntologyClassInstances { get; set; }
@@ -29,6 +28,13 @@ namespace OntoDAL.DataAccess
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+            //TODO убрать напрямую указанную строку подключения
+            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=OntoGenius;User Id=postgres;Password=1234");
         }
 
         public async Task<int> SaveChangesAsync()

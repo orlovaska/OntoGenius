@@ -1,4 +1,4 @@
-﻿namespace OntoApi.Authentication
+﻿namespace OntoApi.Models.Authentication
 {
     public class RefreshModel
     {

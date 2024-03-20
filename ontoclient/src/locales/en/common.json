@@ -1,8 +1,13 @@
 {
-  "title": "Welcome to react using <1>react-i18next</1> fully type-safe",
-  "description": {
-    "part1": "This is a simple example.",
-    "part2": "😉",
-    "part4": "This is 4"
+  "auth": {
+    "password": "Password",
+    "username": "Username",
+    "email": "Email",
+    "registration": "Registration",
+    "login": "Login",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "notHaveAccountYet": "Don't have an account yet?",
+    "signUp": "Sign up"
   }
 }
