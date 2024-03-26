@@ -57,6 +57,16 @@ namespace OntoDAL.Repositories.PostgreRepos
             }
         }
 
+        public async Task DeleteRange(IEnumerable<int> entitiesIds)
+        {
+            var entitiesToDelete = await dbContext.OntologyProperties.Where(e => entitiesIds.Contains(e.Id)).ToListAsync();
+            if (entitiesToDelete != null && entitiesToDelete.Any())
+            {
+                dbContext.OntologyProperties.RemoveRange(entitiesToDelete);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
         public async Task Update(OntologyPropertyModel entity)
         {
             dbContext.Entry(entity).State = EntityState.Modified;

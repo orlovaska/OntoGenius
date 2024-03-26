@@ -1,0 +1,9 @@
+.graph-container #graph-id-graph-wrapper {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.graph-container [name="svg-container-graph-id"] {
+    height: 100% !important;
+    width: 100% !important;
+}

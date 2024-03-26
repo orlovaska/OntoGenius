@@ -17,6 +17,11 @@ namespace OntoDAL.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// Уникальный идентификатор онтологии, к которой относится данное свойство.
+        /// </summary>
+        public int OntologyId { get; set; }
+
+        /// <summary>
         /// Ссылка на объект онтологии.
         /// </summary>
         public OntologyModel Ontology { get; set; }
@@ -25,6 +30,16 @@ namespace OntoDAL.Models
         /// Название свойства.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Уникальный идентификатор родительского класса.
+        /// </summary>
+        public int? ParentPropertyId { get; set; }
+
+        /// <summary>
+        /// Ссылка на родительский класс.
+        /// </summary>
+        public OntologyPropertyModel? ParentProperty { get; set; }
 
         /// <summary>
         /// Идентификатор класса-источника.
@@ -50,5 +65,24 @@ namespace OntoDAL.Models
         /// Описание.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Конструктор для класса OntologyPropertyModel.
+        /// </summary>
+        /// <param name="id">Идентификатор.</param>
+        /// <param name="ontologyId">Уникальный идентификатор онтологии.</param>
+        /// <param name="name">Название свойства.</param>
+        /// <param name="domainClassId">Идентификатор класса-источника.</param>
+        /// <param name="rangeClassId">Идентификатор класса-цели.</param>
+        /// <param name="description">Описание.</param>
+        public OntologyPropertyModel(int ontologyId, string name, int domainClassId, int rangeClassId, string description, int? parentPropertyId)
+        {
+            OntologyId = ontologyId;
+            ParentPropertyId = parentPropertyId;
+            Name = name;
+            DomainClassId = domainClassId;
+            RangeClassId = rangeClassId;
+            Description = description;
+        }
     }
 }

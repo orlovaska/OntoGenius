@@ -26,18 +26,8 @@ const OntologyList: React.FC<IOntologyListProps> = (props) => {
             if (user?.id) {
                 try {
                     OntologyService.getOntologiesByUserId(user.id).then((response) => {
-                      console.log("response.data.ontologies", response.data.ontologies);
-                      console.log("as GetOntologyResponse: ", response.data as GetOntologyResponse);
-                      console.log("ontologies: ", (response.data as GetOntologyResponse).ontologies as IOntology[]);
-                      
                       setOntologies(response.data.ontologies);
                     });
-
-                    // console.log(
-                    //     "ontologiesData: ",
-                    //     ontologiesData.
-                    // );
-                    // setOntologies(ontologiesData.data.ontologies);
                 } catch (error) {
                     //TODO сделать обработку ошибок
                     console.error("Ошибка при получении онтологий:", error);
@@ -61,19 +51,18 @@ const OntologyList: React.FC<IOntologyListProps> = (props) => {
         setChecked(newChecked);
     };
 
-    const emptyList: JSX.Element = <div style={{ height: 400, width: "100%" }}>Пустой лист</div>;
+    const emptyList: JSX.Element = <div style={{ height: 400, width: "40%", margin: "10px" }}>Пустой лист</div>;
 
     const columns: GridColDef[] = [
-        { field: "id", headerName: "ID", width: 70 },
-        { field: "name", headerName: "Name", width: 130 },
-        { field: "ownerUsername", headerName: "Owner Username", width: 130 },
+        { field: "id", headerName: "ID", width: 100 },
+        { field: "name", headerName: "Name", width: 150 },
+        { field: "ownerUsername", headerName: "Owner Username", width: 160 },
     ];
-    console.log("ontologies before render:", ontologies);
 
     return (
         <>
             {ontologies?.length > 0 ? (
-                <div style={{ height: 400, width: "100%" }}>
+                <div style={{ height: 400, width: "40%", margin: "10px" }}>
                     <DataGrid
                         rows={ontologies}
                         columns={columns}
@@ -81,7 +70,7 @@ const OntologyList: React.FC<IOntologyListProps> = (props) => {
                         onRowSelectionModelChange={(rowSelectionModel) => handleToggle(rowSelectionModel[0] as number)}
                         initialState={{
                             pagination: {
-                              paginationModel: { page: 0, pageSize: 5 },
+                              paginationModel: { page: 0, pageSize: 100 },
                             },
                           }}
                         checkboxSelection

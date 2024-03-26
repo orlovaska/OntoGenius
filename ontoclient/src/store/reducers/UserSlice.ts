@@ -6,6 +6,7 @@ interface UserState {
     user: IUser | null
 }
 
+//TODO - поменять после
 const initialState: UserState = {
     // user: null
 

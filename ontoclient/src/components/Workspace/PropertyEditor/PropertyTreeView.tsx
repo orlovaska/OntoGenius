@@ -1,55 +1,42 @@
-import * as React from "react";
+import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 // import Label from "@mui/icons-material/Label";
+import TripOriginIcon from "@mui/icons-material/TripOrigin";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { SvgIconProps, SvgIconTypeMap } from "@mui/material/SvgIcon";
+import { SvgIconProps } from "@mui/material/SvgIcon";
 import { TreeView } from "@mui/x-tree-view/TreeView";
 import {
     TreeItem,
     TreeItemProps,
     treeItemClasses,
 } from "@mui/x-tree-view/TreeItem";
-import { IClass } from "../../models/IClass";
-import ClassService from "../../services/ClassService";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { Label } from "@mui/icons-material";
+import { IClass } from "../../../models/IClass";
+import { Crop169 } from "@mui/icons-material";
+import { IProperty } from "../../../models/IProperty";
 
-interface IBaseTreeViewProps {
-    // ontologyId: number;
-    svgIcon: OverridableComponent<SvgIconTypeMap>
+interface IClassTreeViewProps {
+    properties: IProperty[];
+    onChangeSelectedNode: (selecteProperty: IProperty) => void;
 }
 
-const BaseTreeView: React.FC<IBaseTreeViewProps> = (props) => {
-    const [classes, setClasses] = React.useState<IClass[]>([]);
-    let selectNodeId: number[] = [];
-
-    const selectNode = (nodeIds: string[]) => {
-
-        // selectNodeId = nodeIds.map((id) => id as number)
-        selectNodeId = nodeIds.map((id) => parseInt(id, 10));
-        console.log("nodeIds: ", nodeIds);
-    };
-
+const PropertyTreeView: React.FC<IClassTreeViewProps> = (props) => {
     const renderTree = (
-        classes: IClass[],
-        parentClassId: number | null
+        properties: IProperty[],
+        parentPropertyId: number | null
     ): React.ReactNode => {
-        // console.log("renderTree id: ", parentClassId);
-        // console.log("classes: ", classes);
-
-        return classes
-            .filter((cls) => cls.parentClassId === parentClassId)
+        return properties
+            .filter((cls) => cls.parentPropertyId === parentPropertyId)
             .map((cls) => (
                 <StyledTreeItem
                     nodeId={cls.id.toString()}
                     labelText={cls.name}
-                    labelIcon={Label}
+                    labelIcon={TripOriginIcon}
                     key={cls.id}
                 >
-                    {renderTree(classes, cls.id)}
+                    {renderTree(properties, cls.id)}
                 </StyledTreeItem>
             ));
     };
@@ -59,17 +46,21 @@ const BaseTreeView: React.FC<IBaseTreeViewProps> = (props) => {
             defaultCollapseIcon={<ArrowDropDownIcon />}
             defaultExpandIcon={<ArrowRightIcon />}
             defaultEndIcon={<div style={{ width: 24 }} />}
-            // multiSelect={true}
-            // selected={selectNodeId.toString()}
-            onNodeSelect={(event, nodeIds) => selectNode([nodeIds])}
+            onNodeSelect={(event, nodeId) =>
+                props.onChangeSelectedNode(
+                    props.properties.filter(
+                        (selectClass) => selectClass.id.toString() == nodeId
+                    )[0]
+                )
+            }
             sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
         >
-            {renderTree(classes, null)}
+            {renderTree(props.properties, null)}
         </TreeView>
     );
 };
 
-export default BaseTreeView;
+export default PropertyTreeView;
 
 declare module "react" {
     interface CSSProperties {
@@ -111,13 +102,6 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
             color: "inherit",
         },
     },
-    // [`& .${treeItemClasses.group}`]: {
-    //     marginLeft: 0,
-    //     [`& .${treeItemClasses.content}`]: {
-    //       // marginLeft: 10,
-    //         paddingLeft: theme.spacing(2*treeItemClasses.),
-    //     },
-    // },
 })) as unknown as typeof TreeItem;
 
 const StyledTreeItem = React.forwardRef(function StyledTreeItem(
@@ -154,7 +138,11 @@ const StyledTreeItem = React.forwardRef(function StyledTreeItem(
                         pr: 0,
                     }}
                 >
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
+                    <Box
+                        component={Crop169}
+                        color="#8da9cc"
+                        sx={{ mr: 1}}
+                    />
                     <Typography
                         variant="body2"
                         sx={{ fontWeight: "inherit", flexGrow: 1 }}

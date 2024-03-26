@@ -45,5 +45,22 @@ namespace OntoDAL.Models
         /// Описание.
         /// </summary>
         public string Description { get; set; }
+
+        //public OntologyClassModel(int id, int ontologyId, string name, int? parentClassId, string description)
+        //{
+        //    Id = id;
+        //    OntologyId = ontologyId;
+        //    Name = name;
+        //    ParentClassId = parentClassId;
+        //    Description = description;
+        //}
+
+        public OntologyClassModel( int ontologyId, string name, int? parentClassId, string description)
+        {
+            OntologyId = ontologyId;
+            Name = name;
+            ParentClassId = parentClassId;
+            Description = description;
+        }
     }
 }

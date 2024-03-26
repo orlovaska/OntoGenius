@@ -2,7 +2,7 @@
 
 namespace OntoApi.Models.Ontologies
 {
-    public class GetByUserIdResponse
+    public class GetOntologiesByUserIdResponse
     {
         public OntologyDTO[] Ontologies { get; set; }
     }   

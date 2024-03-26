@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OntoApi.Models.Authentication;
 using OntoApi.Models.Classes;
+using OntoApi.Models.Classes.Requests;
+using OntoApi.Models.Classes.Responses;
 using OntoApi.Models.DTO;
 using OntoApi.Models.Ontologies;
+using OntoDAL.Models;
 using OntoDomain.Services;
 
 namespace OntoApi.Controllers
@@ -15,7 +18,7 @@ namespace OntoApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetByOntologyIdResponse))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> getByOntologyId([FromQuery] int id)
+        public async Task<IActionResult> GetByOntologyId([FromQuery] int id)
         {
             var classes = new OntologyService().GetClassesByOntologyId(id);
             var classDTOs = classes.Select(o => (ClassDTO)o).ToArray();
@@ -25,6 +28,56 @@ namespace OntoApi.Controllers
             };
             return Ok((result));
         }
+
+        [HttpPost("addClass")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddClassResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddClass([FromBody] AddClassRequest cls)
+        {
+            OntologyClassModel ontologyClass = new OntologyClassModel(cls.OntologyId, cls.Name, cls.ParentClassId, "");
+            if (cls == null)
+            {
+                return BadRequest();
+            }
+
+            int addedClassId = await new OntologyService().AddClass(ontologyClass);
+
+            return Ok(new AddClassResponse()
+            {
+                AddedClassId = addedClassId,
+            });
+        }
+
+        [HttpDelete("deleteClass")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeleteClass([FromQuery] int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            new OntologyService().DeleteClassRecursively(id);
+
+            return Ok();
+        }
+
+        [HttpPut("updateClass")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateClass([FromBody] OntologyClassModel ontologyClass)
+        {
+            if (ontologyClass == null || ontologyClass.Id <= 0)
+            {
+                return BadRequest();
+            }
+
+            new OntologyService().UpdateClass(ontologyClass);
+
+            return Ok();
+        }
+
     }
 }
 

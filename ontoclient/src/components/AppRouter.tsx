@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { privateRoutes, publicRoutes } from "../routes";
-import { HOME_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
+import { HOME_ROUTE, REGISTRATION_ROUTE, LOGIN_ROUTE} from "../utils/consts";
 
 const AppRouter: React.FC = () => {
     const { user } = useAppSelector((state) => state.userReducer);
@@ -21,7 +21,7 @@ const AppRouter: React.FC = () => {
             {user ? (
                 <Navigate to={HOME_ROUTE} />
             ) : (
-                <Navigate to={REGISTRATION_ROUTE} />
+                <Navigate to={LOGIN_ROUTE} />
             )}
             <Routes>
                 {user

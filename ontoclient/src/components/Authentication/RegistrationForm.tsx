@@ -18,7 +18,6 @@ interface IRegistrationFormProps {}
 const RegistrationForm: React.FC<IRegistrationFormProps> = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.userReducer);
     const { t } = useTranslation("common");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -48,15 +47,9 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = () => {
         // TODO - сделать запрос на регистрацию
         AuthService.registration(username, email, password)
             .then((response) => {
-                console.log("AuthService registration запрос", response);
-
                 AuthService.login(username, password).then((response) => {
-                    console.log("AuthService login запрос", response);
                     const { login } = userSlice.actions;
-                    console.log("Был dispatch login");
-
                     dispatch(login(response.data.user));
-                    console.log("user из store: ", user);
                 });
             })
             .catch((error) => {
@@ -73,41 +66,70 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = () => {
     };
 
     const redirectToLogin = () => {
-        navigate(LOGIN_ROUTE, {replace: true});
+        navigate(LOGIN_ROUTE, { replace: true });
     };
 
     return (
-        <div className="registration-form-container">
-            <TextField
-                id="outlined-basic"
-                label={t("auth.username")}
-                variant="outlined"
-                size="small"
-                onChange={handleUsernameChange}
-            />
-            <TextField
-                id="outlined-basic"
-                label={t("auth.email")}
-                variant="outlined"
-                size="small"
-                onChange={handleEmailChange}
-            />
-            <TextField
-                id="outlined-basic"
-                label={t("auth.password")}
-                variant="outlined"
-                size="small"
-                // type="password"
-                onChange={handlePasswordChange}
-            />
-            <Button size="small" color="primary" onClick={handleSubmit}>
-                {t("auth.signUp")}
-            </Button>
-            <p className="link-container">
-                <label>{t("auth.alreadyHaveAccount")} </label>
-                <Link to={LOGIN_ROUTE}>{t("auth.signIn")}</Link>
-                <Button onClick={redirectToLogin}>{t("auth.signIn")}</Button>
-            </p>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "100vh",
+            }}
+        >
+            <div
+                style={{
+                    width: "300px",
+                    padding: "20px",
+                    backgroundColor: "#f0f0f0",
+                    textAlign: "center",
+                }}
+            >
+                <h2>{t("auth.registration")}</h2>
+                <TextField
+                    fullWidth
+                    id="username"
+                    label={t("auth.username")}
+                    variant="outlined"
+                    size="small"
+                    onChange={handleUsernameChange}
+                    sx={{ mb: 2 }} // Добавление отступа снизу
+                />
+                <TextField
+                    fullWidth
+                    id="email"
+                    label={t("auth.email")}
+                    variant="outlined"
+                    size="small"
+                    onChange={handleEmailChange}
+                    sx={{ mb: 2 }} // Добавление отступа снизу
+                />
+                <TextField
+                    fullWidth
+                    id="password"
+                    label={t("auth.password")}
+                    variant="outlined"
+                    size="small"
+                    onChange={handlePasswordChange}
+                    sx={{ mb: 2 }} // Добавление отступа снизу
+                />
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={handleSubmit}
+                    sx={{ mb: 2 }} // Добавление отступа снизу
+                >
+                    {t("auth.signUp")}
+                </Button>
+                <p>
+                    {t("auth.alreadyHaveAccount")}{" "}
+                    <Link to={LOGIN_ROUTE}>{t("auth.signIn")}</Link>
+                </p>
+            </div>
         </div>
     );
 };

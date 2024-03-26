@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Label from "@mui/icons-material/Label";
+// import Label from "@mui/icons-material/Label";
+import TripOriginIcon from "@mui/icons-material/TripOrigin";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { SvgIconProps } from "@mui/material/SvgIcon";
@@ -12,64 +13,25 @@ import {
     TreeItemProps,
     treeItemClasses,
 } from "@mui/x-tree-view/TreeItem";
-import { IClass } from "../../models/IClass";
-import ClassService from "../../services/ClassService";
+import { IClass } from "../../../models/IClass";
 
 interface IClassTreeViewProps {
-    ontologyId: number;
+    classes: IClass[];
+    onChangeSelectedNode: (selecteClass: IClass) => void;
 }
 
 const ClassTreeView: React.FC<IClassTreeViewProps> = (props) => {
-    const [classes, setClasses] = React.useState<IClass[]>([]);
-    let selectNodeId: number[] = [];
-
-    const selectNode = (nodeIds: string[]) => {
-
-        // selectNodeId = nodeIds.map((id) => id as number)
-        selectNodeId = nodeIds.map((id) => parseInt(id, 10));
-        console.log("nodeIds: ", nodeIds);
-    };
-
-    useEffect(() => {
-        const fetchClasses = async () => {
-            if (props.ontologyId) {
-                try {
-                    ClassService.getClassesByOntologyId(props.ontologyId).then(
-                        (response) => {
-                            console.log(
-                                "response.data.ontologies",
-                                response.data.classes
-                            );
-                            // console.log("as GetOntologyResponse: ", response.data as Get);
-                            // console.log("ontologies: ", (response.data as Get).ontologies as IClass[]);
-
-                            setClasses(response.data.classes);
-                        }
-                    );
-                } catch (error) {
-                    //TODO сделать обработку ошибок
-                    console.error("Ошибка при получении классов:", error);
-                }
-            }
-        };
-
-        fetchClasses(); // Вызовите функцию при монтировании компонента
-    }, []);
-
     const renderTree = (
         classes: IClass[],
         parentClassId: number | null
     ): React.ReactNode => {
-        // console.log("renderTree id: ", parentClassId);
-        // console.log("classes: ", classes);
-
         return classes
             .filter((cls) => cls.parentClassId === parentClassId)
             .map((cls) => (
                 <StyledTreeItem
                     nodeId={cls.id.toString()}
                     labelText={cls.name}
-                    labelIcon={Label}
+                    labelIcon={TripOriginIcon}
                     key={cls.id}
                 >
                     {renderTree(classes, cls.id)}
@@ -82,12 +44,16 @@ const ClassTreeView: React.FC<IClassTreeViewProps> = (props) => {
             defaultCollapseIcon={<ArrowDropDownIcon />}
             defaultExpandIcon={<ArrowRightIcon />}
             defaultEndIcon={<div style={{ width: 24 }} />}
-            // multiSelect={true}
-            // selected={selectNodeId.toString()}
-            onNodeSelect={(event, nodeIds) => selectNode([nodeIds])}
-            sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+            onNodeSelect={(event, nodeId) =>
+                props.onChangeSelectedNode(
+                    props.classes.filter(
+                        (selectClass) => selectClass.id.toString() == nodeId
+                    )[0]
+                )
+            }
+            sx={{ height: "100%", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
         >
-            {renderTree(classes, null)}
+            {renderTree(props.classes, null)}
         </TreeView>
     );
 };
@@ -170,7 +136,11 @@ const StyledTreeItem = React.forwardRef(function StyledTreeItem(
                         pr: 0,
                     }}
                 >
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
+                    <Box
+                        component={LabelIcon}
+                        color="#8da9cc"
+                        sx={{ mr: 1}}
+                    />
                     <Typography
                         variant="body2"
                         sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -188,4 +158,3 @@ const StyledTreeItem = React.forwardRef(function StyledTreeItem(
         />
     );
 });
-

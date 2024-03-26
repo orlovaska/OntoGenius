@@ -21,8 +21,6 @@ $api.interceptors.response.use((config) => {
         originalRequest._isRetry = true;
         try {
             console.log("Был запрос на refresh");
-            // document.cookie = 
-            // const response = await axios.post<LoginResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { withCredentials: true })
             const accessToken = localStorage.getItem('token');
             const refreshToken = Cookies.get('refreshToken');
             const response = await axios.post<LoginResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { accessToken: accessToken, refreshToken: refreshToken })

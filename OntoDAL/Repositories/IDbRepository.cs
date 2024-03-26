@@ -12,6 +12,7 @@ namespace OntoDAL.Repositories
         Task AddRange(IEnumerable<T> newEntities);
 
         Task Delete(int entityId);
+        Task DeleteRange(IEnumerable<int> entities);
 
         Task Update(T entity);
         Task UpdateRange(IEnumerable<T> entities);

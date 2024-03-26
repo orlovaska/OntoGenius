@@ -9,8 +9,6 @@ export default class AuthService {
         console.log("username внутри login: ", username)
         console.log("password внутри login: ", password)
 
-        // TODO пока так, после нужно убрать
-        // return axios.post<LoginResponse>(`/api${AUTH_CONTROLLER_ROUTE}/login`, { username: username, password: password })
         const result = axios.post<LoginResponse>(`/api${AUTH_CONTROLLER_ROUTE}/login`, { username: username, password: password })
         const response = await result;
         if (response) {
