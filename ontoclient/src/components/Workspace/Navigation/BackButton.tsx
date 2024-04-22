@@ -3,13 +3,16 @@ import { Button } from "@mui/material";
 import { ModelTypeEnum } from "../Workspace";
 import OntologyService from "../../../services/OntologyService";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { HOME_ROUTE } from "../../../utils/consts";
+import { useNavigate } from "react-router-dom";
 
 interface IDownloadReportButtonProps {
     // ontologyId: number;
+    clearOntology: () => void;
 }
 
 const BackButton: React.FC<IDownloadReportButtonProps> = (props) => {
-    const goBack = () => {};
+
 
     return (
         <Button
@@ -17,7 +20,7 @@ const BackButton: React.FC<IDownloadReportButtonProps> = (props) => {
             variant="outlined"
             color="inherit"
             size="large"
-            onClick={goBack} // Вызываем метод downloadReport при клике
+            onClick={props.clearOntology} // Вызываем метод downloadReport при клике
             sx={{
                 marginRight: "8px",
                 width: "20px",

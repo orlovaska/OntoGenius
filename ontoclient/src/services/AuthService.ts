@@ -32,4 +32,8 @@ export default class AuthService {
         return $api.post(`/api${AUTH_CONTROLLER_ROUTE}/logout`)
     }
 
+    static async updateUser(id: number, username: string, email: string): Promise<void> {
+        return axios.post(`/api${AUTH_CONTROLLER_ROUTE}/updateUser`, { id: id, username: username, email: email})
+    }
+
 }

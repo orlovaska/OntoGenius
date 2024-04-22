@@ -72,13 +72,13 @@ namespace OntoApi.Controllers
         [HttpPut("updateProperty")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateProperty([FromBody] OntologyPropertyModel ontologyProperty)
+        public IActionResult UpdateProperty([FromBody] UpdatePropertyRequest request)
         {
-            if (ontologyProperty == null || ontologyProperty.Id <= 0)
+            if (request == null || request.Id <= 0)
             {
                 return BadRequest();
             }
-
+            OntologyPropertyModel ontologyProperty = new OntologyPropertyModel(request.Id, request.OntologyId, request.Name, request.DomainClassId, request.RangeClassId, "", request.ParentPropertyId);
             new OntologyService().UpdateProperty(ontologyProperty);
 
             return Ok();

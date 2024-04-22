@@ -6,10 +6,12 @@ import OntologyService from "../../../services/OntologyService";
 import SelectModelTypeButtons from "./SelectModelTypeButtons";
 import DownloadReportButton from "./DownloadReportButton";
 import BackButton from "./BackButton";
+import LogoutButton from "../../LogoutButton";
 
 interface INavigationBarProps {
     ontologyId: number;
     onSelectModelType: (modelType: ModelTypeEnum) => void;
+    clearOntology: () => void;
 }
 
 const NavigationBar: React.FC<INavigationBarProps> = (props) => {
@@ -20,11 +22,12 @@ const NavigationBar: React.FC<INavigationBarProps> = (props) => {
             style={{ backgroundColor: "#f5f5f5" }}
         >
             <Toolbar>
-                <BackButton />
+                <BackButton clearOntology={props.clearOntology}/>
                 <SelectModelTypeButtons
                     onSelectModelType={props.onSelectModelType}
                 />
                 <DownloadReportButton ontologyId={props.ontologyId} />
+                <LogoutButton/>
             </Toolbar>
         </AppBar>
     );

@@ -50,7 +50,6 @@ const PropertyEditor: React.FC<IClassHierarchyProps> = (props) => {
                         }
                     });
                 } catch (error) {
-                    //TODO - сделать обработку ошибок
                     console.error("Ошибка при получении классов:", error);
                 }
             }
@@ -63,7 +62,10 @@ const PropertyEditor: React.FC<IClassHierarchyProps> = (props) => {
     //Если не передаем id, то передаем выбранный из дерева
     const deleteSelectedPropertyRecursively = (id?: number) => {
         const deletedClassId = id ? id : selectedProperty.id;
-        console.log("Сработал PropertyService.deleteProperty: id: ", deletedClassId);
+        console.log(
+            "Сработал PropertyService.deleteProperty: id: ",
+            deletedClassId
+        );
         if (deletedClassId) {
             PropertyService.deleteProperty(deletedClassId)
                 .then((response) => {
@@ -142,6 +144,52 @@ const PropertyEditor: React.FC<IClassHierarchyProps> = (props) => {
             });
     };
 
+    const editProperty = (
+        newName: string,
+        newParentClassId: number,
+        domainClassId: number,
+        rangeClassId: number,
+        propertyId?: number
+    ) => {
+        console.log("Сработал ClassService.updateClass");
+
+        const newClassId = propertyId ? propertyId : selectedProperty.id;
+        if (!newClassId) {
+            return;
+        }
+
+        PropertyService.updateProperty(
+            newClassId,
+            props.ontologyId,
+            newName,
+            newParentClassId,
+            domainClassId,
+            rangeClassId
+        )
+            .then((response) => {
+                if (response.status === 200) {
+                    const updatedClass: IProperty = {
+                        // Создаем объект обновленного класса
+                        id: newClassId, // Используем тот же ID
+                        name: newName,
+                        ontologyId: props.ontologyId,
+                        parentPropertyId: newParentClassId,
+                        domainClassId: domainClassId,
+                        rangeClassId: rangeClassId,
+                    };
+                    const updatedProperties = properties.map((cls) =>
+                        cls.id === newClassId ? updatedClass : cls
+                    ); // Обновляем массив классов
+                    setProperties(updatedProperties);
+                } else {
+                    console.error("Ошибка при обновлении класса");
+                }
+            })
+            .catch((error) => {
+                console.error("Ошибка при отправке запроса на сервер:", error);
+            });
+    };
+
     return (
         <div style={{ display: "flex", height: "100%" }}>
             <div
@@ -154,6 +202,12 @@ const PropertyEditor: React.FC<IClassHierarchyProps> = (props) => {
                 }}
             >
                 <PropertyTreeActionButtons
+                    editProperty={(
+                        name,
+                        parentPropertyId,
+                        domainClassId,
+                        rangeClassId
+                    ) => editProperty(name, parentPropertyId,domainClassId, rangeClassId)}
                     deleteProperty={deleteSelectedPropertyRecursively}
                     addProperty={(
                         name: string,

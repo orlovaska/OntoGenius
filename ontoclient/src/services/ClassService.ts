@@ -46,11 +46,12 @@ export default class ClassService {
     static async updateClass(
         ontologyId: number,
         name: string,
-        parentId: number
+        parentId: number,
+        id: number
     ): Promise<AxiosResponse<any>> {
         const response = await axios.put<AddClassResponse>(
             `/api${CLASS_CONTROLLER_ROUTE}/${updateClass_ROUTE}`,
-            { ontologyId: ontologyId, parentClassId: parentId, name: name }
+            { ontologyId: ontologyId, parentClassId: parentId, name: name, id: id }
         );
         console.log("updateClass response: ", response);
         return response;

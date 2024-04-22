@@ -8,20 +8,21 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { IClass } from "../../../models/IClass";
 import { useEffect } from "react";
+import { IProperty } from "../../../models/IProperty";
 
 interface IConfirmDeletionDialogProps {
-    currentClass: IClass;
+    currentProperty: IProperty;
     isOpen: boolean;
-    editClass: (name: string, parentClassId: number) => void;
+    editProperty: (name: string, parentClassId: number) => void;
     onClose: () => void;
 }
 
-const EditClassDialog: React.FC<IConfirmDeletionDialogProps> = (props) => {
-    const [name, setName] = React.useState<string>(props.currentClass?.name);
+const EditPropertyDialog: React.FC<IConfirmDeletionDialogProps> = (props) => {
+    const [name, setName] = React.useState<string>(props.currentProperty?.name);
 
     useEffect(() => {
-      setName(props.currentClass?.name);
-    }, [props.currentClass]);
+      setName(props.currentProperty?.name);
+    }, [props.currentProperty]);
 
     return (
         <Dialog
@@ -38,17 +39,17 @@ const EditClassDialog: React.FC<IConfirmDeletionDialogProps> = (props) => {
 
                     const name = formJson.Name;
                     // TODO - сделать выбор и передачу класса
-                    props.editClass(name, props.currentClass.parentClassId);
+                    props.editProperty(name, props.currentProperty.parentPropertyId);
                     props.onClose();
                 },
             }}
         >
             <DialogTitle>
-                Редактирование класса к {props.currentClass?.name}
+                Редактирование свойства к {props.currentProperty?.name}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Введите новое название класса.
+                    Введите новое название свойства.
                 </DialogContentText>
                 <TextField
                     autoFocus
@@ -73,4 +74,4 @@ const EditClassDialog: React.FC<IConfirmDeletionDialogProps> = (props) => {
     );
 };
 
-export default EditClassDialog;
+export default EditPropertyDialog;

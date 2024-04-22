@@ -26,7 +26,6 @@ $api.interceptors.response.use((config) => {
             const response = await axios.post<LoginResponse>(`${API_URL}${AUTH_CONTROLLER_ROUTE}/refresh`, { accessToken: accessToken, refreshToken: refreshToken })
             const newAccessTokenToken =response.data.accessToken;
             localStorage.setItem('token', newAccessTokenToken);
-            // TODO убрать установку куки с фронта на бек
             // Установка refreshToken в куку без указания срока истечения
             const newRefreshToken =response.data.refreshToken;
             Cookies.set('refreshToken', newRefreshToken);

@@ -6,10 +6,18 @@ import { IClass } from "../../../models/IClass";
 import ConfirmDeletionDialog from "../Dialogs/ConfirmDeletionDialog";
 import { IProperty } from "../../../models/IProperty";
 import AddPropertyDialog from "../Dialogs/AddPropertyDialog";
+import EditIcon from "@mui/icons-material/Edit";
+import EditPropertyDialog from "../Dialogs/EditPropertyDialog";
 
 interface IClassTreeActionButtonsProps {
     //TODO свойства для диалога добавления, убрать в контроллер после
     currentProperty: IProperty;
+    editProperty: (
+        name: string,
+        parentPropertyId: number,
+        domainClassId: number,
+        rangeClassId: number
+    ) => void;
     addProperty: (
         name: string,
         domainClassId: number,
@@ -24,6 +32,15 @@ const PropertyTreeActionButtons: React.FC<IClassTreeActionButtonsProps> = (
 ) => {
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+    const openEditDialog = () => {
+        setIsEditDialogOpen(true);
+    };
+
+    const closeEditClassDialog = () => {
+        setIsEditDialogOpen(false);
+    };
 
     const openAddDialog = () => {
         setIsAddDialogOpen(true);
@@ -42,7 +59,7 @@ const PropertyTreeActionButtons: React.FC<IClassTreeActionButtonsProps> = (
     };
 
     console.log("currentProperty: ", props.currentProperty);
-    
+
     return (
         // <div style={{backgroundColor: "rgb(224, 224, 224)"}}>
         <div>
@@ -65,6 +82,15 @@ const PropertyTreeActionButtons: React.FC<IClassTreeActionButtonsProps> = (
                 isOpen={isDeleteDialogOpen}
                 onDeletionConfirm={props.deleteProperty}
                 onClose={closeDeleteConfirmDialog}
+            />
+
+            <Button startIcon={<EditIcon />} onClick={openEditDialog} />
+
+            <EditPropertyDialog
+                currentProperty={props.currentProperty}
+                isOpen={isEditDialogOpen}
+                editProperty={(name, parentClassId) => props.editProperty(name, parentClassId, props.currentProperty.domainClassId, props.currentProperty.rangeClassId)}
+                onClose={closeEditClassDialog}
             />
         </div>
     );

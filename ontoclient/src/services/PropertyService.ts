@@ -10,6 +10,7 @@ import {
     deleteProperty_ROUTE,
     getClassesByOntologyId_ROUTE,
     getPropertiesByOntologyId_ROUTE,
+    updateProperty_ROUTE,
 } from "../utils/consts";
 import { GetPropertiesByOntologyIdResponse } from "../models/response/GetPropertiesByOntologyIdResponse";
 import { AddPropertyResponse } from "../models/response/AddPropertyResponse";
@@ -55,6 +56,29 @@ export default class PropertyService {
             `/api${PROPERTY_CONTROLLER_ROUTE}//${deleteProperty_ROUTE}?id=${id}`
         );
         console.log("deleteProperty response: ", response);
+        return response;
+    }
+
+    static async updateProperty(
+        id: number,
+        ontologyId: number,
+        name: string,
+        parentPropertyId: number,
+        domainClassId: number,
+        rangeClassId: number
+    ): Promise<AxiosResponse<any>> {
+        const response = await axios.put<any>(
+            `/api${PROPERTY_CONTROLLER_ROUTE}/${updateProperty_ROUTE}`,
+            {
+                ontologyId: ontologyId,
+                parentPropertyId: parentPropertyId,
+                domainClassId: domainClassId,
+                rangeClassId: rangeClassId,
+                name: name,
+                id: id,
+            }
+        );
+        console.log("updateProperty response: ", response);
         return response;
     }
 }

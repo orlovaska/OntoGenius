@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OntoApi.Models.Authentication;
+using OntoApi.Models.Classes.Requests;
 using OntoApi.Models.DTO;
 using OntoDAL.Models;
+using OntoDomain.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -149,6 +151,22 @@ namespace OntoApi.Controllers
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation("Revoke succeeded");
+
+            return Ok();
+        }
+
+        [HttpPut("updateUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateClass([FromBody] UpdateUserRequest request)
+        {
+            if (request == null || request.Id < 0)
+            {
+                return BadRequest();
+            }
+            //UserModel ontologyClass = new UserModel(request.Id, request.Username, request.Email);
+            //var user = await _userManager
+            //new OntologyService().UpdateClass(ontologyClass);
 
             return Ok();
         }

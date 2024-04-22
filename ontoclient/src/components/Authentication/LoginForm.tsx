@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { REGISTRATION_ROUTE } from "../../utils/consts";
-import { Link } from "react-router-dom";
+import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
+import { Link, useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -12,20 +12,21 @@ interface ILoginProps {}
 
 const LoginForm: React.FC<ILoginProps> = () => {
     const { t } = useTranslation("common");
+    const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const dispatch = useAppDispatch();
 
     const handleSubmit = async () => {
-        //debugger;
         if (!isValidPassword(password)) {
             return;
         }
-        // TODO - сделать запрос на регистрацию
+
         AuthService.login(username, password)
             .then((response) => {
                 const { login } = userSlice.actions;
                 dispatch(login(response.data.user));
+                navigate(HOME_ROUTE, { replace: true });
             })
             .catch((error) => {
                 // setError(error);
@@ -38,6 +39,12 @@ const LoginForm: React.FC<ILoginProps> = () => {
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setUsername(event.target.value);
+    };
+
+    const handlePasswordChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setPassword(event.target.value);
     };
 
     return (
@@ -75,6 +82,7 @@ const LoginForm: React.FC<ILoginProps> = () => {
                     type="password"
                     variant="outlined"
                     size="small"
+                    onChange={handlePasswordChange}
                     sx={{ mb: 2 }} // Добавление отступа снизу
                 />
                 <Button
@@ -82,6 +90,7 @@ const LoginForm: React.FC<ILoginProps> = () => {
                     variant="contained"
                     color="primary"
                     size="small"
+                    onClick={handleSubmit}
                     sx={{ mb: 2 }} // Добавление отступа снизу
                 >
                     {t("auth.signIn")}

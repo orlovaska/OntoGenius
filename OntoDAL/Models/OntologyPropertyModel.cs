@@ -84,5 +84,16 @@ namespace OntoDAL.Models
             RangeClassId = rangeClassId;
             Description = description;
         }
+
+        public OntologyPropertyModel(int id, int ontologyId, string name, int domainClassId, int rangeClassId, string description, int? parentPropertyId)
+        {
+            Id = id;
+            OntologyId = ontologyId;
+            ParentPropertyId = parentPropertyId;
+            Name = name;
+            DomainClassId = domainClassId;
+            RangeClassId = rangeClassId;
+            Description = description;
+        }
     }
 }

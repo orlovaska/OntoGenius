@@ -6,15 +6,8 @@ interface UserState {
     user: IUser | null
 }
 
-//TODO - поменять после
 const initialState: UserState = {
-    // user: null
-
-    user: {
-        id: 35,
-        email: "yasha132456@gmail.com",
-        username: "yasha132456@gmail.com"
-    }
+    user: null
 }
 
 export const userSlice = createSlice({

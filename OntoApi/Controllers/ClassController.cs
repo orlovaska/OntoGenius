@@ -66,13 +66,13 @@ namespace OntoApi.Controllers
         [HttpPut("updateClass")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateClass([FromBody] OntologyClassModel ontologyClass)
+        public IActionResult UpdateClass([FromBody] UpdateClassRequest request)
         {
-            if (ontologyClass == null || ontologyClass.Id <= 0)
+            if (request == null || request.Id < 0)
             {
                 return BadRequest();
             }
-
+            OntologyClassModel ontologyClass = new OntologyClassModel(request.Id, request.OntologyId, request.Name, request.ParentClassId, "");
             new OntologyService().UpdateClass(ontologyClass);
 
             return Ok();

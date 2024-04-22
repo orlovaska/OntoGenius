@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { LoginResponse } from "../../models/response/LoginResponse";
 import AuthService from "../../services/AuthService";
-import { AUTH_CONTROLLER_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
+import { AUTH_CONTROLLER_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
 import TextField from "@mui/material/TextField";
 import { useTranslation } from "react-i18next";
 import { Button, Container } from "@mui/material";
@@ -50,6 +50,7 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = () => {
                 AuthService.login(username, password).then((response) => {
                     const { login } = userSlice.actions;
                     dispatch(login(response.data.user));
+                    navigate(HOME_ROUTE, { replace: true });
                 });
             })
             .catch((error) => {

@@ -11,7 +11,7 @@ import EditClassDialog from "../Dialogs/EditClassDialog";
 interface IClassTreeActionButtonsProps {
     currentClass: IClass;
     addClass: (name: string) => void; // Метод для обработки нажатия кнопки добавления
-    editClass: (name: string) => void; // Метод для обработки нажатия кнопки добавления
+    editClass: (name: string, parentClassId: number) => void; // Метод для обработки нажатия кнопки добавления
     deleteClass: () => void; // Метод для обработки нажатия кнопки удаления с передачей ID элемента
 }
 

@@ -67,7 +67,7 @@ namespace OntoApi.Controllers
             {
                 ReportData = reportData,
                 FileName = fileName
-                
+
             };
 
             return Ok(response);
@@ -78,43 +78,42 @@ namespace OntoApi.Controllers
         }
 
 
-        //// Метод добавления онтологии
-        //[HttpPost("add")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> AddOntology([FromBody] OntologyDTO ontologyDTO)
-        //{
-        //    // Преобразование DTO в модель
-        //    var ontologyModel = (OntologyModel)ontologyDTO;
-
-        //    // Вызов сервиса для добавления онтологии
-        //    var addedOntology = new OntologyService().AddOntology(ontologyModel);
-
-        //    // Преобразование добавленной онтологии в DTO
-        //    var addedOntologyDTO = (OntologyDTO)addedOntology;
-
-        //    // Формирование ответа
-        //    var response = new AddOntologyResponse
-        //    {
-        //        AddedOntology = addedOntologyDTO
-        //    };
-
-        //    return Ok(response);
-        //}
-
-        // Метод удаления онтологии
-        [HttpDelete("delete/{ontologyId}")]
+        // Метод добавления онтологии
+        [HttpPost("addOntology")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteOntology(int ontologyId)
+        public async Task<IActionResult> AddOntology([FromBody] AddOntologyRequest ontologyDTO)
         {
-            // Вызов сервиса для удаления онтологии
-            new OntologyService().DeleteOntology(ontologyId);
+            // Преобразование DTO в модель
+            var ontologyModel = new OntologyModel(ontologyDTO.OwnerUserId, ontologyDTO.Name, ontologyDTO.Description);
+
+
+            int addedOntology = await new OntologyService().AddOntology(ontologyModel);
+
+            // Формирование ответа
+            var response = new AddOntologyResponse
+            {
+                AddedOntologyId = addedOntology
+            };
+
+            return Ok(response);
+        }
+
+        // Метод удаления онтологии
+        [HttpDelete("deleteOntology")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeleteOntology([FromQuery] int id)
+        {
+            if (id < 0)
+            {
+                return BadRequest();
+            }
+
+            new OntologyService().DeleteOntology(id);
 
             return Ok();
-
         }
     }
 }

@@ -34,11 +34,12 @@ namespace OntoDomain.Services
             Console.WriteLine(ontologyRepository.Get(a => a.OwnerUserId == userId));
             return ontologyRepository.Get(a => a.OwnerUserId == userId);
         }
-        public async void AddOntology(OntologyModel model)
+        public async Task<int> AddOntology(OntologyModel model)
         {
-            ontologyRepository.Add(model);
+            int addedOntologyId = await ontologyRepository.Add(model);
             int id = await classRepository.Add(new OntologyClassModel(model.Id, "RootClass", null, "Корневой класс, созданный автоматически"));
             propertyRepository.Add(new OntologyPropertyModel(model.Id, "RootProperty", id, id, "Корневое свойство, созданное автоматически", null));
+            return addedOntologyId;
         }
         public void DeleteOntology(int ontologyId)
         {

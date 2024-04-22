@@ -91,12 +91,12 @@ const ClassGraph: React.FC<IClassGraphProps> = (props) => {
         const nodes: any = [];
 
         classes.forEach((cls, index) => {
-            console.log({
-                x: calculateNodeX(getClassDepth(cls), horizontalSpacing),
-                y: calculateNodeY(index, verticalSpacing),
-                name: cls.name,
-                level: getClassDepth(cls),
-            });
+            // console.log({
+            //     x: calculateNodeX(getClassDepth(cls), horizontalSpacing),
+            //     y: calculateNodeY(index, verticalSpacing),
+            //     name: cls.name,
+            //     level: getClassDepth(cls),
+            // });
 
             nodes.push({
                 symbolType: "circle",

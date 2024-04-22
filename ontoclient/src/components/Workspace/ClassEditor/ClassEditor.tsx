@@ -48,10 +48,13 @@ const ClassEditor: React.FC<IClassHierarchyProps> = (props) => {
             ClassService.deleteClass(deletedClassId)
                 .then((response) => {
                     if (response.status === 200) {
-                        const newClasses = deleteClassRecursiveFromArray(
-                            deletedClassId,
-                            [...classes]
-                        );
+                        console.log("classes: ", classes);
+                        
+                        // const newClasses = deleteClassRecursiveFromArray(
+                        //     deletedClassId,
+                        //     [...classes]
+                        // );
+                        const newClasses = classes.filter((cls) => cls.id != deletedClassId)
                         console.log("newClasses: ", newClasses);
 
                         setClasses(newClasses);
@@ -112,7 +115,7 @@ const ClassEditor: React.FC<IClassHierarchyProps> = (props) => {
     };
 
 
-    const editClass = (name: string, classId?: number) => {
+    const editClass = (newName: string, newParentClassId: number, classId?: number) => {
         console.log("Сработал ClassService.updateClass");
 
         const newClassId = classId ? classId : selectedClass.id
@@ -122,7 +125,8 @@ const ClassEditor: React.FC<IClassHierarchyProps> = (props) => {
 
         ClassService.updateClass(
             props.ontologyId,
-            name,
+            newName,
+            newParentClassId,
             newClassId
         )
             .then((response) => {
@@ -130,8 +134,8 @@ const ClassEditor: React.FC<IClassHierarchyProps> = (props) => {
                     const updatedClass: IClass = { 
                         // Создаем объект обновленного класса
                         id: newClassId, // Используем тот же ID
-                        name: name,
-                        parentClassId: classId ? classId : selectedClass.id,
+                        name: newName,
+                        parentClassId: newParentClassId,
                     };
                     const updatedClasses = classes.map((cls) => cls.id === newClassId ? updatedClass : cls); // Обновляем массив классов
                     setClasses(updatedClasses);
@@ -158,7 +162,7 @@ const ClassEditor: React.FC<IClassHierarchyProps> = (props) => {
                 <ClassTreeActionButtons
                     deleteClass={deleteSelectedClassRecursively}
                     addClass={(name) => addClass(name)}
-                    editClass={(name) => editClass(name)}
+                    editClass={(name, parentClassId) => editClass(name, parentClassId)}
                     currentClass={selectedClass}
                 />
                 <Divider style={{ marginBottom: "5px", marginTop: "2px"}} />

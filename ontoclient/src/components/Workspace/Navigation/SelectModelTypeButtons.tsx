@@ -29,21 +29,21 @@ const SelectModelTypeButtons: React.FC<ISelectModelTypeButtonsProps> = ({ onSele
                 aria-label="class-model-button"
                 size="small" // Уменьшаем размер кнопки
             >
-                Class
+                Классы
             </ToggleButton>
             <ToggleButton
                 value={ModelTypeEnum.PROPERTY}
                 aria-label="property-model-button"
                 size="small" // Уменьшаем размер кнопки
             >
-                Property
+                Свойства
             </ToggleButton>
             <ToggleButton
                 value={ModelTypeEnum.INSTANCE}
                 aria-label="instance-model-button"
                 size="small" // Уменьшаем размер кнопки
             >
-                Instance
+                Экземпляры
             </ToggleButton>
         </ToggleButtonGroup>
     );

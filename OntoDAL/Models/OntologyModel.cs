@@ -45,6 +45,14 @@ namespace OntoDAL.Models
         /// Список классов.
         /// </summary>
         public List<OntologyClassModel> OntologyClasses { get; set; }
+
+        public OntologyModel(int ownerUserId, string name, string description)
+        {
+            OwnerUserId = ownerUserId;
+            Name = name;
+            Description = description;
+
+        }
     }
 
 }
